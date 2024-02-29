@@ -12,14 +12,14 @@ def msgToFr(msg):
     H.update(msg)
     return byteToFr(H.digest())
 
-def sign(P, sec, msg, k=None):
+def sign(P, priv, msg, k=None):
     z = msgToFr(msg)
     if k is None:
         k = Fr()
         k.setRand()
     Q = P * k
     r = Fr(Q.x.v)
-    s = (r * sec + z) / k
+    s = (r * priv + z) / k
     return (r, s)
 
 def verify(P, sig, pub, msg):
