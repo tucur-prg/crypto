@@ -6,8 +6,8 @@ def main():
     curve = prime256v1()
 
     Fp.init(curve.p)
-    Fr.init(curve.r)
-    Ec.init(curve.a, curve.b, curve.r)
+    Fr.init(curve.n)
+    Ec.init(curve.a, curve.b, curve.n)
 
     P = Ec(curve.Gx, curve.Gy)
 
