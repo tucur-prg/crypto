@@ -3,23 +3,6 @@ from ecdsa import sign, verify, msgToFr
 from curve import prime256v1
 
 def main():
-    '''
-    print("p = 7")
-    p = 7
-    Fp.init(p)
-
-    print("a = 5")
-    a = Fp(5)
-
-    print("calc")
-    print("x * (a / x) = a")
-
-    for i in range(1, p):
-        x = Fp(i)
-        r = a / x
-        ss = x * r
-        print("{} * {} = {}".format(x, r, ss))
-    '''
     curve = prime256v1()
 
     Fp.init(curve.p)
