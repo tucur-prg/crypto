@@ -2,6 +2,7 @@ import hashlib
 
 from logical import ch, maj, sum0, sum1, sigma0, sigma1
 from bit import rotr, shr
+from util import padding, toStr
 
 _K = [
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -17,27 +18,6 @@ _K = [
 _H = [
     0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
 ]
-
-SEPARATOR = b"\x80"
-ZERO = b"\x00"
-
-def padding(msg):
-    l = len(msg)
-    tmp = [ZERO] * 64
-    tmp[0] = SEPARATOR
-    if l % 64 < 56:
-        block = tmp[0:56 - l % 64]
-    else:
-        block = tmp[0:64 + 56 - l % 64]
-    bs = msg + b"".join(block)
-    bits = l * 8
-    size = [ZERO] * 8
-    size[4] = ((bits & 0xff000000) >> 24).to_bytes()
-    size[5] = ((bits & 0x00ff0000) >> 16).to_bytes()
-    size[6] = ((bits & 0x0000ff00) >> 8).to_bytes()
-    size[7] = ((bits & 0x000000ff)).to_bytes()
-    bs += b''.join(size)
-    return bs
 
 def compute(msg):
     N = len(msg) // 64
@@ -79,9 +59,6 @@ def compute(msg):
         H[7] = (h + H[7]) & 0xffffffff
 
     return H
-
-def toStr(hash):
-    return ''.join([hex(i)[2:].rjust(8, '0') for i in hash])
 
 def main():
     msg = 'hello world'
