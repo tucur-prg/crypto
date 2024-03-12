@@ -3,8 +3,16 @@ from bit import rotr, shr
 def ch(x, y, z):
     return (x & y) ^ (~x & z)
 
+def ch_(x, y, z):
+    return (x & y) | (~x & z)
+#    return ((x&(y^z))^z)
+
 def maj(x, y, z):
     return (x & y) ^ (x & z) ^ (y & z)
+
+def maj_(x, y, z):
+    return (x & y) | (x & z) | (y & z)
+#    return (((x|y)&z)|(x&y))
 
 def parity(x, y, z):
     return x ^ y ^ z
